@@ -1,46 +1,46 @@
-import { useState } from "react";
-import { useRef } from "react";
-import "./App.css";
+import React, { useRef, useState } from "react"
+import app from "./app.css"
 
 function App() {
-  const [todos, setTodos] = useState([])
+  const [todo, setTodo] = useState([]);
   const inputRef = useRef()
-  const handleToDo = () => {
-    const text = inputRef.current.value;
-    const newItem = { complete: false, text }
-    setTodos([...todos, newItem])
+  const handleTodo = () => {
+    const text = inputRef.current.value
+    const todos = { complete: false, text }
+    setTodo([...todo, todos])
     inputRef.current.value = ""
-   
   }
-  const handleItem = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].complete = !newTodos[index].complete;
-    setTodos(newTodos)
-    
+  const handleTodoEdit = (index) => {
+    const newTodo = [...todo]
+    newTodo[index].complete = !newTodo[index].complete
+    setTodo(newTodo)
   }
   const handleDeleteItem = (index) => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1)
-    setTodos(newTodos)
+    const newTodo = [...todo];
+    newTodo.splice(index, 1)
+
+    setTodo(newTodo)
   }
   return (
-    <div className="App">
-      <h2>To-Do-List</h2>
-      <div className="to-do-contianer">
-        <ul>
-          {todos.map(({ text, complete }, index) => {
-            return (
-              <div className="flex">
-                <li key={index} className={complete ? "done" : ""} onClick={() => handleItem(index)}> {text}</li>
-                <span className="haneen" onClick={() => handleDeleteItem(index)}>X</span>
-              </div>)
-          })}
-        </ul>
-        <input ref={inputRef} type='text' placeholder='Enter The Task'></input>
-        <button onClick={handleToDo}>Press</button>
-      </div>
+    <div className="project">
+      <h1>TODO-LIST</h1>
+      <ul>
+
+        {todo.map((item, index) => {
+
+          return (
+            <div className="collection">
+              <li className={todo[index].complete ? "done" : ""} onClick={() => handleTodoEdit(index)} key={index}>{item.text}</li>
+              <span className="span" onClick={() => handleDeleteItem(index)}>🗷</span>
+            </div>
+          )
+
+        })}
+      </ul>
+      <input ref={inputRef} placeholder="Enter Todo..."></input>
+      <button onClick={handleTodo}>Enter</button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
